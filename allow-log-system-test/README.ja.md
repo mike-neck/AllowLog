@@ -2,11 +2,15 @@
 
 AllowLogのシステムテスト（機能テスト）格納ディレクトリです。
 
-リファクタリング前後で共通のテストとするため専用のブランチ'systemtest'で作業します。
+リファクタリング前後で共通のテストとするため専用のブランチで作業します。
+    https://github.com/mike-neck/AllowLog/tree/systemtest
 
 適時、masterにmergeして使用してください。
 
-主なauther: @nowsprinting
+
+
+#Auther
+主に、 @nowsprinting
 
 
 
