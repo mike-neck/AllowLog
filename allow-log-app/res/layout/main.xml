@@ -89,6 +89,7 @@
     </LinearLayout>
 
     <Button 
+        a:id="@+id/to_history"
         a:layout_width="120dip"
         a:layout_height="wrap_content"
         a:layout_marginTop="20dip"
