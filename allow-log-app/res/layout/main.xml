@@ -1,13 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Hello World, MainActivity"
-    />
-</LinearLayout>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    a:layout_width="fill_parent"
+    a:layout_height="fill_parent"
+    a:layout_margin="30dip"
+    a:layout_gravity="center"
+    a:baselineAligned="false"
+    a:orientation="vertical" >
+    <TextView
+        a:id="@+id/app_title"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:gravity="center_horizontal"
+        a:layout_marginTop="25dip"
+        a:text="@string/app_name"
+        a:textSize="24sp" />
 
+    <LinearLayout 
+        a:orientation="vertical"
+        a:layout_height="wrap_content"
+        a:layout_width="match_parent"
+        a:layout_margin="20dip"
+        a:gravity="center">
+
+        <LinearLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:layout_gravity="right"
+            a:orientation="horizontal" >
+
+            <EditText
+                a:id="@+id/payment"
+                a:layout_height="wrap_content"
+                a:layout_width="0dip"
+                a:layout_weight="1"
+                a:textSize="30sp"
+                a:maxLength="6"
+                a:gravity="right"
+                a:inputType="number" />
+
+            <TextView 
+                a:id="@+id/yen"
+                a:layout_height="wrap_content"
+                a:layout_width="40dip"
+                a:gravity="center_horizontal"
+                a:text="@string/yen"
+                a:textSize="24sp" />
+
+        </LinearLayout>
+        <Button
+            a:id="@+id/allowance_registration"
+            a:layout_width="120dip"
+            a:layout_height="wrap_content"
+            a:layout_marginTop="20dip"
+            a:layout_gravity="right"
+            a:text="@string/registration" />
+
+    </LinearLayout>
+
+    <TextView 
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:text="@string/description"
+        a:textSize="24sp"
+        a:gravity="left"/>
+
+    <LinearLayout 
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:orientation="horizontal"
+        a:layout_marginTop="20dip"
+        a:layout_gravity="right"
+        a:gravity="right">
+
+        <TextView 
+            a:id="@+id/total"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:textSize="30sp"
+            a:gravity="right"/>
+
+        <TextView 
+            a:layout_height="wrap_content"
+            a:layout_width="40dip"
+            a:text="@string/yen"
+            a:textSize="24sp"
+            a:gravity="center"/>
+    </LinearLayout>
+
+    <Button 
+        a:id="@+id/to_history"
+        a:layout_width="120dip"
+        a:layout_height="wrap_content"
+        a:layout_marginTop="20dip"
+        a:text="@string/to_history"
+        a:layout_gravity="right|bottom"
+        a:gravity="center"/>
+
+</LinearLayout>

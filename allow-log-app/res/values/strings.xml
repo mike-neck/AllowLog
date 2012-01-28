@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MainActivity</string>
+    <string name="app_name">お財布・ログ</string>
+    <string name="registration">登録</string>
+    <string name="zero">0</string>
+    <string name="yen">円</string>
+    <string name="description">今月つかったお金</string>
+    <string name="to_history">履歴</string>
+    <string name="more">もっと見る</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirmation">お財布・ログに登録しますよ？！</string>
 </resources>

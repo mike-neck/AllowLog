@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    a:layout_width="match_parent"
+    a:layout_height="match_parent"
+    a:orientation="vertical" >
+
+    <ListView
+        a:id="@+id/history"
+        a:layout_width="match_parent"
+        a:layout_height="380dip" >
+    </ListView>
+
+    <Button
+        a:id="@+id/more"
+        a:layout_width="200dp"
+        a:layout_height="wrap_content"
+        a:layout_gravity="center"
+        a:layout_margin="20dip"
+        a:gravity="center"
+        a:text="@string/more"
+        a:textSize="20sp" />
+
+</LinearLayout>

@@ -28,7 +28,6 @@ tmp/**/*
 *~.nib
 local.properties
 .classpath
-.settings/
 .loadpath
 
 # External tool builders
@@ -39,3 +38,4 @@ local.properties
 *.ipr
 *.iws
 .idea/
+lint.xml

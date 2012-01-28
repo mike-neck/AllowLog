@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    a:layout_width="match_parent"
+    a:layout_height="match_parent"
+    a:gravity="center_vertical"
+    a:orientation="vertical" >
+
+    <LinearLayout
+        a:layout_width="wrap_content"
+        a:layout_height="wrap_content"
+        a:orientation="vertical"
+        a:layout_gravity="center"
+        a:gravity="center_vertical"
+        a:layout_margin="10dip"
+        a:background="@drawable/dialog">
+
+        <TextView
+            a:text="@string/confirmation"
+            a:textSize="20sp"
+            a:textColor="#ffffff"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            a:gravity="left"
+            a:layout_gravity="left"
+            a:layout_margin="10dip" />
+    
+        <LinearLayout
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:orientation="horizontal"
+            a:layout_margin="20dip"
+            a:gravity="right">
+    
+            <TextView
+                a:id="@+id/going_to_register"
+                a:textSize="24sp"
+                a:textColor="#ffffff"
+                a:layout_width="wrap_content"
+                a:layout_height="wrap_content"
+                a:gravity="right"
+                a:layout_gravity="right" />
+
+            <TextView 
+                a:textSize="24sp"
+                a:textColor="#ffffff"
+                a:layout_width="40dip"
+                a:layout_height="wrap_content"
+                a:text="@string/yen"
+                a:gravity="center"
+                a:layout_gravity="right"/>
+
+        </LinearLayout>
+    
+        <LinearLayout 
+            a:layout_width="match_parent"
+            a:layout_height="wrap_content"
+            a:orientation="horizontal"
+            a:layout_margin="20dip"
+            a:gravity="center">
+    
+            <Button
+                a:id="@+id/cancel"
+                a:text="@string/cancel"
+                a:textSize="20sp"
+                a:layout_width="130dip"
+                a:layout_height="wrap_content"
+                a:gravity="center"/>
+    
+            <Button
+                a:id="@+id/persist"
+                a:text="@string/registration"
+                a:textSize="20sp"
+                a:layout_width="130dip"
+                a:layout_height="wrap_content"
+                a:gravity="center"/>
+    
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
