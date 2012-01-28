@@ -73,6 +73,7 @@ public class RegisterActivity extends Activity {
                 contents.put("AMOUNT", amount);
 
                 database.insert("ALLOWANCE_LOG", null, contents);
+                database.close();
 
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
