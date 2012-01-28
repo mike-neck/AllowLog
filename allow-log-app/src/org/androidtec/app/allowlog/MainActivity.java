@@ -90,7 +90,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * @param view
 	 *            - the View user clicked.
 	 */
-	@Override
 	public void onClick(View view) {
 		int id = view.getId();
 		switch ( id ) {
