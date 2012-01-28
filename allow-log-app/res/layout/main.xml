@@ -33,7 +33,6 @@
                 a:layout_height="wrap_content"
                 a:layout_width="0dip"
                 a:layout_weight="1"
-                a:text="@string/zero"
                 a:textSize="30sp"
                 a:maxLength="6"
                 a:gravity="right"

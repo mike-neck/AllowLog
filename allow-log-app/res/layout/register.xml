@@ -17,6 +17,7 @@
         <TextView
             a:text="@string/confirmation"
             a:textSize="20sp"
+            a:textColor="#ffffff"
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"
             a:gravity="left"
@@ -33,19 +34,21 @@
             <TextView
                 a:id="@+id/going_to_register"
                 a:textSize="24sp"
+                a:textColor="#ffffff"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:gravity="right"
                 a:layout_gravity="right" />
-    
+
             <TextView 
                 a:textSize="24sp"
+                a:textColor="#ffffff"
                 a:layout_width="40dip"
                 a:layout_height="wrap_content"
                 a:text="@string/yen"
                 a:gravity="center"
                 a:layout_gravity="right"/>
-    
+
         </LinearLayout>
     
         <LinearLayout 
