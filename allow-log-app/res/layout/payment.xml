@@ -3,6 +3,7 @@
     a:layout_width="match_parent"
     a:layout_height="match_parent"
     a:orientation="horizontal"
+    a:layour_gravity="center_vertical"
     a:layout_margin="10dip">
 
     <TextView
@@ -10,23 +11,33 @@
         a:layout_width="120dip"
         a:layout_height="wrap_content"
         a:textSize="20sp"
+        a:layout_gravity="left"
         a:gravity="center"/>
 
-    <TextView
-        a:id="@+id/amount"
-        a:layout_width="wrap_content"
-        a:layout_height="wrap_content"
-        a:textSize="20sp"
-        a:gravity="right"
-        a:layout_gravity="right"/>
-
-    <TextView
-        a:id="@+id/loc"
-        a:text="@string/yen"
-        a:textSize="24sp"
-        a:layout_width="40dip"
-        a:layout_height="wrap_content"
+    <LinearLayout
+        a:orientation="horizontal"
         a:layout_gravity="right"
-        a:gravity="center"/>
+        a:layout_height="wrap_content"
+        a:layout_width="fill_parent"
+        a:gravity="right|center_vertical">
+
+		<TextView
+	        a:id="@+id/amount"
+	        a:layout_width="wrap_content"
+	        a:layout_height="wrap_content"
+	        a:textSize="20sp"
+	        a:gravity="right"
+	        a:layout_gravity="right|center_vertical"/>
+	
+	    <TextView
+	        a:id="@+id/loc"
+	        a:text="@string/yen"
+	        a:textSize="24sp"
+	        a:layout_width="40dip"
+	        a:layout_height="wrap_content"
+	        a:layout_gravity="right"
+	        a:gravity="center"/>
+
+	    </LinearLayout>
 
 </LinearLayout>

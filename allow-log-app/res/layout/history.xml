@@ -7,7 +7,7 @@
     <ListView
         a:id="@+id/history"
         a:layout_width="match_parent"
-        a:layout_height="400dip" >
+        a:layout_height="380dip" >
     </ListView>
 
     <Button
