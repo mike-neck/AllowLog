@@ -32,6 +32,16 @@ public class MainActivity extends Activity implements OnClickListener {
 
         View registerButton = findViewById(R.id.allowance_registration);
         registerButton.setOnClickListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * SQLiteから金額合計を抽出し、totalに表示する.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
 
         SQLiteDatabase sqLiteDatabase = prepareSql();
         String sql = countSql();
