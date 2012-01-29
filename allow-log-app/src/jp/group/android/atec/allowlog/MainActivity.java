@@ -1,5 +1,5 @@
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -32,6 +32,16 @@ public class MainActivity extends Activity implements OnClickListener {
 
         View registerButton = findViewById(R.id.allowance_registration);
         registerButton.setOnClickListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * SQLiteから金額合計を抽出し、totalに表示する.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
 
         SQLiteDatabase sqLiteDatabase = prepareSql();
         String sql = countSql();
@@ -107,10 +117,29 @@ public class MainActivity extends Activity implements OnClickListener {
             EditText edit = (EditText) findViewById(R.id.payment);
             CharSequence amount = edit.getText();
             intent.putExtra("ALLOWANCE_PAYMENT", amount);
-            startActivity(intent);
+            startActivityForResult(intent, RegisterActivity.REQUESTCODE_FROM_MAINACTIVITY);
             break;
         default:
             break;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * RegisterActivityからのレスポンスを受け取ります.
+     * 
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch ( requestCode ) {
+        case RegisterActivity.REQUESTCODE_FROM_MAINACTIVITY:
+            if ( resultCode == RESULT_OK ) {
+                // 入力欄をクリアする
+                EditText edit = (EditText) findViewById(R.id.payment);
+                edit.setText("");
+            }
+        }
+    }
+
 }

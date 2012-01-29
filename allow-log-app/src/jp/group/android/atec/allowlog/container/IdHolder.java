@@ -1,5 +1,5 @@
 
-package org.androidtec.app.allowlog.container;
+package jp.group.android.atec.allowlog.container;
 
 public interface IdHolder {
 

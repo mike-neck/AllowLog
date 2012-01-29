@@ -1,11 +1,10 @@
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import org.androidtec.app.allowlog.container.IdHolder;
-
+import jp.group.android.atec.allowlog.container.IdHolder;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
+
+    /** MainActivityから呼び出されるときのリクエストコード（未使用）. */
+    public static final int REQUESTCODE_FROM_MAINACTIVITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Activity activity = (Activity) v.getContext();
+                activity.setResult(RESULT_CANCELED);
                 activity.finish();
             }
 
@@ -78,6 +81,7 @@ public class RegisterActivity extends Activity {
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
                 toast.show();
 
+                activity.setResult(RESULT_OK);
                 activity.finish();
             }
 
