@@ -3,7 +3,7 @@
     a:layout_width="match_parent"
     a:layout_height="match_parent"
     a:orientation="horizontal"
-    a:layour_gravity="center_vertical"
+    a:layout_gravity="center_vertical"
     a:layout_margin="10dip">
 
     <TextView
