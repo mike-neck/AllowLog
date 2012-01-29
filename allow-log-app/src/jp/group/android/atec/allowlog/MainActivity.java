@@ -117,10 +117,29 @@ public class MainActivity extends Activity implements OnClickListener {
             EditText edit = (EditText) findViewById(R.id.payment);
             CharSequence amount = edit.getText();
             intent.putExtra("ALLOWANCE_PAYMENT", amount);
-            startActivity(intent);
+            startActivityForResult(intent, RegisterActivity.REQUESTCODE_FROM_MAINACTIVITY);
             break;
         default:
             break;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * RegisterActivityからのレスポンスを受け取ります.
+     * 
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch ( requestCode ) {
+        case RegisterActivity.REQUESTCODE_FROM_MAINACTIVITY:
+            if ( resultCode == RESULT_OK ) {
+                // 入力欄をクリアする
+                EditText edit = (EditText) findViewById(R.id.payment);
+                edit.setText("");
+            }
+        }
+    }
+
 }
