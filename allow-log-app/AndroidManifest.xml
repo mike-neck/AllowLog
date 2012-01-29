@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:a="http://schemas.android.com/apk/res/android"
-      package="org.androidtec.app.allowlog"
+      package="jp.group.android.atec.allowlog"
       a:versionCode="1"
       a:versionName="1.0">
     <application a:label="@string/app_name" >
@@ -15,7 +15,7 @@
         <activity a:name="RegisterActivity"
             a:label="@string/app_name"
             a:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-        <activity a:name="HistoryActivity"
+        <activity a:name=".HistoryActivity"
             a:label="@string/app_name"
             a:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
     </application>

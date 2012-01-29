@@ -2,7 +2,7 @@
  * 
  */
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import java.util.ArrayList;
 import java.util.Calendar;

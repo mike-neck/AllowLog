@@ -1,5 +1,5 @@
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

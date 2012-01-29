@@ -1,5 +1,5 @@
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import java.util.Calendar;
 import java.util.TimeZone;

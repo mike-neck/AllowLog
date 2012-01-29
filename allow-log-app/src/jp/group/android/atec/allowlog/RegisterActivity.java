@@ -1,11 +1,10 @@
 
-package org.androidtec.app.allowlog;
+package jp.group.android.atec.allowlog;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import org.androidtec.app.allowlog.container.IdHolder;
-
+import jp.group.android.atec.allowlog.container.IdHolder;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
