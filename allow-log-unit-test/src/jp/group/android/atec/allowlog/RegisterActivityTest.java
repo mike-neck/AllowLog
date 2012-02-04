@@ -1,3 +1,4 @@
+
 package jp.group.android.atec.allowlog;
 
 import android.app.Activity;
@@ -10,14 +11,13 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 
 /**
- * {@link RegisterActivity}のテスト<br/>
- * {@link MainActivity}にて100円と入力した状態で起動される<br/>
+ * {@link RegisterActivity}のテスト<br/> {@link MainActivity}にて100円と入力した状態で起動される<br/>
  * 下記の挙動をテストする。<br/>
- *
  * <ul style="list-style-type : numeric;">
- *     <li>登録ボタンを押した時 -&gt; 使用金額100円のレコードが登録される</li>
- *     <li>キャンセルボタンを押した時 -&gt; レコードが登録されない</li>
+ * <li>登録ボタンを押した時 -&gt; 使用金額100円のレコードが登録される</li>
+ * <li>キャンセルボタンを押した時 -&gt; レコードが登録されない</li>
  * </ul>
+ * 
  * @author mike_neck
  */
 public class RegisterActivityTest extends ActivityInstrumentationTestCase2<RegisterActivity> {
@@ -40,7 +40,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
 
     /**
      * 使用金額100円を入力した後に起動された{@link RegisterActivity}をテストする.
-     *
+     * 
      * @throws Exception
      */
     @Override
@@ -67,11 +67,10 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
 
     /**
      * 登録ボタンをクリックした時の挙動に関するテスト.<br/>
-     *
      * 登録されるレコードの件数 : 1件 <br/>
      * 登録されたレコードのamount : 100
      */
-    public void test使用金額１００円を登録する () {
+    public void test使用金額１００円を登録する() {
         SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
         SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
 
@@ -82,17 +81,16 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         database.close();
 
         int registerButtonId = RegisterActivity.Controller.REGISTER.getHoldingId();
-        final Button registerButton = (Button) activity.findViewById(registerButtonId);
+        final Button registerButton = (Button)activity.findViewById(registerButtonId);
         assertEquals("登録", registerButton.getText());
 
-        activity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        registerButton.performClick();
-                    }
-                }
-        );
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                registerButton.performClick();
+            }
+        });
+        instrumentation.waitForIdleSync();
 
         sqliteOpenHelper = getAllowanceDatabase();
         database = sqliteOpenHelper.getReadableDatabase();
@@ -116,7 +114,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
     /**
      * キャンセルボタンを押した時の挙動に関するテスト.
      */
-    public void testキャンセルボタンを押す () {
+    public void testキャンセルボタンを押す() {
         SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
         SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
 
@@ -127,17 +125,15 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         database.close();
 
         int cancelButtonId = RegisterActivity.Controller.CANCEL.getHoldingId();
-        final Button cancelButton = (Button) activity.findViewById(cancelButtonId);
+        final Button cancelButton = (Button)activity.findViewById(cancelButtonId);
         assertEquals("キャンセル", cancelButton.getText());
 
-        activity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        cancelButton.performClick();
-                    }
-                }
-        );
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cancelButton.performClick();
+            }
+        });
 
         sqliteOpenHelper = getAllowanceDatabase();
         database = sqliteOpenHelper.getReadableDatabase();
@@ -150,12 +146,13 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
     }
 
     @Override
-    public void tearDown () throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
     }
+
     /**
      * データを全件を取得する.
-     *
+     * 
      * @param database
      * @return
      */
@@ -167,7 +164,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
 
     /**
      * データ件数を取得する.
-     *
+     * 
      * @param database
      * @return
      */
@@ -179,7 +176,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
 
     /**
      * カーソル管理.
-     *
+     * 
      * @param cursor
      */
     private void manageCursor(Cursor cursor) {
@@ -189,7 +186,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
 
     /**
      * activityから{@link jp.group.android.atec.allowlog.AllowanceDatabase}を取得する.
-     *
+     * 
      * @return
      */
     private SQLiteOpenHelper getAllowanceDatabase() {
