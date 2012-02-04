@@ -7,15 +7,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by IntelliJ IDEA.
- * User: mike
- * Date: 12/02/04
- * Time: 18:43
- * To change this template use File | Settings | File Templates.
+ * {@link RegisterActivity}のテスト<br/>
+ * {@link MainActivity}にて100円と入力した状態で起動される<br/>
+ * 下記の挙動をテストする。<br/>
+ *
+ * <ul style="list-style-type : numeric;">
+ *     <li>登録ボタンを押した時 -&gt; 使用金額100円のレコードが登録される</li>
+ *     <li>キャンセルボタンを押した時 -&gt; レコードが登録されない</li>
+ * </ul>
+ * @author mike_neck
  */
 public class RegisterActivityTest extends ActivityInstrumentationTestCase2<RegisterActivity> {
 
@@ -35,6 +38,11 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         super(CLASS);
     }
 
+    /**
+     * 使用金額100円を入力した後に起動された{@link RegisterActivity}をテストする.
+     *
+     * @throws Exception
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -57,6 +65,12 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         database.close();
     }
 
+    /**
+     * 登録ボタンをクリックした時の挙動に関するテスト.<br/>
+     *
+     * 登録されるレコードの件数 : 1件 <br/>
+     * 登録されたレコードのamount : 100
+     */
     public void test使用金額１００円を登録する () {
         SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
         SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
@@ -99,6 +113,9 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         database.close();
     }
 
+    /**
+     * キャンセルボタンを押した時の挙動に関するテスト.
+     */
     public void testキャンセルボタンを押す () {
         SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
         SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
@@ -136,7 +153,6 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
     public void tearDown () throws Exception {
         super.tearDown();
     }
-
     /**
      * データを全件を取得する.
      *
@@ -149,6 +165,12 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         return cursor;
     }
 
+    /**
+     * データ件数を取得する.
+     *
+     * @param database
+     * @return
+     */
     private Cursor countAllowanceLogs(SQLiteDatabase database) {
         Cursor cursor = database.rawQuery("SELECT COUNT(*) AS CNT FROM ALLOWANCE_LOG;", null);
         manageCursor(cursor);
@@ -166,8 +188,8 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
     }
 
     /**
-     * activityから{@link AllowanceDatabase}を取得する.
-     * 
+     * activityから{@link jp.group.android.atec.allowlog.AllowanceDatabase}を取得する.
+     *
      * @return
      */
     private SQLiteOpenHelper getAllowanceDatabase() {
