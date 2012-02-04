@@ -63,19 +63,25 @@ public class RegisterActivity extends Activity {
 
                 SQLiteOpenHelper openHelper = new AllowanceDatabase(context);
                 SQLiteDatabase database = openHelper.getWritableDatabase();
+                CharSequence text;
+                database.beginTransaction();
 
-                ContentValues contents = new ContentValues();
+                try {
+                    ContentValues contents = new ContentValues();
+                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+                    long date = cal.getTimeInMillis();
+                    contents.put("LOG_DATE", date);
 
-                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
-                long date = cal.getTimeInMillis();
-                contents.put("LOG_DATE", date);
+                    TextView view = (TextView) activity.findViewById(R.id.going_to_register);
+                    text = view.getText();
+                    long amount = Long.parseLong(text.toString());
+                    contents.put("AMOUNT", amount);
 
-                TextView view = (TextView) activity.findViewById(R.id.going_to_register);
-                CharSequence text = view.getText();
-                long amount = Long.parseLong(text.toString());
-                contents.put("AMOUNT", amount);
-
-                database.insert("ALLOWANCE_LOG", null, contents);
+                    database.insert("ALLOWANCE_LOG", null, contents);
+                    database.setTransactionSuccessful();
+                } finally {
+                    database.endTransaction();
+                }
                 database.close();
 
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
