@@ -1,9 +1,6 @@
 
 package jp.group.android.atec.allowlog;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +11,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import jp.group.android.atec.allowlog.model.AllowanceLogData;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -43,10 +45,15 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onResume() {
         super.onResume();
 
-        SQLiteDatabase sqLiteDatabase = prepareSql();
-        String sql = countSql();
-        long totalValue = getTotalAmount(sqLiteDatabase, sql);
-        sqLiteDatabase.close();
+        long totalValue = 0;
+        SQLiteDatabase database = prepareSql();
+        try {
+            long from = getFromDate();
+            long to = getToDate();
+            totalValue = AllowanceLogData.getTotalAmount(database, from, to);
+        } finally {
+            database.close();
+        }
 
         TextView total = (TextView) findViewById(R.id.total);
         total.setText(Long.toString(totalValue));
@@ -67,14 +74,6 @@ public class MainActivity extends Activity implements OnClickListener {
     private SQLiteDatabase prepareSql() {
         SQLiteOpenHelper database = new AllowanceDatabase(this);
         return database.getReadableDatabase();
-    }
-
-    private String countSql() {
-        StringBuilder builder = new StringBuilder();
-        long from = getFromDate();
-        long to = getToDate();
-        return builder.append("SELECT ").append("SUM(AMOUNT) ").append("FROM ").append("ALLOWANCE_LOG ")
-                .append("WHERE LOG_DATE BETWEEN ").append(from).append(" AND ").append(to).append(";").toString();
     }
 
     private long getToDate() {
