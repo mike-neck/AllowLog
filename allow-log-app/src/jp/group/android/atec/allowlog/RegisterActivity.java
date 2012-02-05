@@ -1,12 +1,7 @@
 
 package jp.group.android.atec.allowlog;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import jp.group.android.atec.allowlog.container.IdHolder;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +11,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import jp.group.android.atec.allowlog.container.IdHolder;
+import jp.group.android.atec.allowlog.exception.AppException;
+import jp.group.android.atec.allowlog.model.AllowanceLogData;
 
 public class RegisterActivity extends Activity {
 
@@ -63,29 +62,23 @@ public class RegisterActivity extends Activity {
 
                 SQLiteOpenHelper openHelper = new AllowanceDatabase(context);
                 SQLiteDatabase database = openHelper.getWritableDatabase();
-                CharSequence text;
-                database.beginTransaction();
-
                 try {
-                    ContentValues contents = new ContentValues();
-                    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
-                    long date = cal.getTimeInMillis();
-                    contents.put("LOG_DATE", date);
+                    database.beginTransaction();
 
                     TextView view = (TextView) activity.findViewById(R.id.going_to_register);
-                    text = view.getText();
-                    long amount = Long.parseLong(text.toString());
-                    contents.put("AMOUNT", amount);
-
-                    database.insert("ALLOWANCE_LOG", null, contents);
+                    String text = view.getText().toString();
+                    AllowanceLogData.createRecord(database, text);
                     database.setTransactionSuccessful();
+
+                    Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+                    toast.show();
+                } catch ( AppException e ) {
+                    Toast toast = Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();
                 } finally {
                     database.endTransaction();
+                    database.close();
                 }
-                database.close();
-
-                Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
 
                 activity.setResult(RESULT_OK);
                 activity.finish();
