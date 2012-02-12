@@ -3,12 +3,14 @@ package jp.group.android.atec.allowlog;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import jp.group.android.atec.allowlog.util.DatabaseUtil;
 
 /**
  * 初回起動時のViewに関するテスト<br/>
@@ -35,18 +37,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     @Override
     public void setUp () {
-        activity = getActivity();
-        instrumentation = getInstrumentation();
         setActivityInitialTouchMode(false);
+        instrumentation = getInstrumentation();
 
-        SQLiteOpenHelper sqLiteOpenHelper = getAllowanceDatabase();
-        SQLiteDatabase database = sqLiteOpenHelper.getWritableDatabase();
+        Context context = instrumentation.getTargetContext();
+        SQLiteDatabase database = DatabaseUtil.getWritableDatabase(context);
+        DatabaseUtil.cleanUpDatabase(database);
 
-        database.beginTransaction();
-        database.delete(TABLE, null, null);
-        database.setTransactionSuccessful();
-        database.endTransaction();
-        database.close();
+        activity = getActivity();
     }
 
     public void test最初に表示される金額は０円 () {

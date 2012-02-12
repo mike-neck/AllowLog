@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+import jp.group.android.atec.allowlog.util.DatabaseUtil;
 
 /**
  * {@link RegisterActivity}のテスト<br/> {@link MainActivity}にて100円と入力した状態で起動される<br/>
@@ -55,14 +56,8 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         instrumentation = getInstrumentation();
         setActivityInitialTouchMode(false);
 
-        SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
-        SQLiteDatabase database = sqliteOpenHelper.getWritableDatabase();
-
-        database.beginTransaction();
-        database.delete(TABLE, null, null);
-        database.setTransactionSuccessful();
-        database.endTransaction();
-        database.close();
+        SQLiteDatabase database = DatabaseUtil.getWritableDatabase(activity);
+        DatabaseUtil.cleanUpDatabase(database);
     }
 
     /**
@@ -71,8 +66,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
      * 登録されたレコードのamount : 100
      */
     public void test使用金額１００円を登録する() {
-        SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
-        SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
+        SQLiteDatabase database = DatabaseUtil.getReadableDatabase(activity);
 
         Cursor cursor = countAllowanceLogs(database);
         assertEquals(0, cursor.getInt(0));
@@ -92,8 +86,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         });
         instrumentation.waitForIdleSync();
 
-        sqliteOpenHelper = getAllowanceDatabase();
-        database = sqliteOpenHelper.getReadableDatabase();
+        database = DatabaseUtil.getReadableDatabase(activity);
 
         cursor = countAllowanceLogs(database);
         assertEquals(1, cursor.getInt(0));
@@ -115,8 +108,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
      * キャンセルボタンを押した時の挙動に関するテスト.
      */
     public void testキャンセルボタンを押す() {
-        SQLiteOpenHelper sqliteOpenHelper = getAllowanceDatabase();
-        SQLiteDatabase database = sqliteOpenHelper.getReadableDatabase();
+        SQLiteDatabase database = DatabaseUtil.getReadableDatabase(activity);
 
         Cursor cursor = countAllowanceLogs(database);
         assertEquals(0, cursor.getInt(0));
@@ -135,8 +127,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
             }
         });
 
-        sqliteOpenHelper = getAllowanceDatabase();
-        database = sqliteOpenHelper.getReadableDatabase();
+        database = DatabaseUtil.getReadableDatabase(activity);
 
         cursor = countAllowanceLogs(database);
         assertEquals(0, cursor.getInt(0));
@@ -184,12 +175,4 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         cursor.moveToFirst();
     }
 
-    /**
-     * activityから{@link jp.group.android.atec.allowlog.AllowanceDatabase}を取得する.
-     * 
-     * @return
-     */
-    private SQLiteOpenHelper getAllowanceDatabase() {
-        return new AllowanceDatabase(activity);
-    }
 }
