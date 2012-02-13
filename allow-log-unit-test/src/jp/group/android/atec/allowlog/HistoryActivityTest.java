@@ -7,10 +7,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 import jp.group.android.atec.allowlog.util.DatabaseUtil;
 
 import java.util.*;
@@ -62,7 +59,8 @@ public class HistoryActivityTest extends ActivityInstrumentationTestCase2<Histor
         assertEquals(0, listView.getCount());
 
         List<Long> records = Arrays.asList(100L);
-        createAllowanceData(records);
+        Context context = instrumentation.getTargetContext();
+        DatabaseUtil.createAllowanceData(context, records);
 
         final Bundle bundle = new Bundle();
         callActivityOnCreate(bundle);
@@ -79,7 +77,8 @@ public class HistoryActivityTest extends ActivityInstrumentationTestCase2<Histor
         for (long num = 100L; num <= 2100L; num += 100L) {
             records.add(num);
         }
-        createAllowanceData(records);
+        Context context = instrumentation.getTargetContext();
+        DatabaseUtil.createAllowanceData(context, records);
 
         final Bundle bundle = new Bundle();
         callActivityOnCreate(bundle);
@@ -100,20 +99,4 @@ public class HistoryActivityTest extends ActivityInstrumentationTestCase2<Histor
         instrumentation.waitForIdleSync();
     }
 
-    private void createAllowanceData(List<Long> records) {
-        SQLiteDatabase database = DatabaseUtil.getWritableDatabase(activity);
-        try {
-            database.beginTransaction();
-            for (long item : records) {
-                ContentValues values = new ContentValues();
-                values.put("LOG_DATE", new Date().getTime());
-                values.put("AMOUNT", item);
-                database.insert("ALLOWANCE_LOG", null, values);
-            }
-            database.setTransactionSuccessful();
-            database.endTransaction();
-        } finally {
-            database.close();
-        }
-    }
 }

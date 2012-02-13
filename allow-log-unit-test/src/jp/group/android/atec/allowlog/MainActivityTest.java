@@ -68,8 +68,4 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertEquals("0", textView.getText());
     }
 
-    private SQLiteOpenHelper getAllowanceDatabase() {
-        return new AllowanceDatabase(activity);
-    }
-
 }
