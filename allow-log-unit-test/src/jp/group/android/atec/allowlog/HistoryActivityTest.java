@@ -2,7 +2,6 @@ package jp.group.android.atec.allowlog;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -60,7 +59,7 @@ public class HistoryActivityTest extends ActivityInstrumentationTestCase2<Histor
 
         List<Long> records = Arrays.asList(100L);
         Context context = instrumentation.getTargetContext();
-        DatabaseUtil.createAllowanceData(context, records);
+        DatabaseUtil.createAllowanceDataFromLong(context, records);
 
         final Bundle bundle = new Bundle();
         callActivityOnCreate(bundle);
@@ -78,7 +77,7 @@ public class HistoryActivityTest extends ActivityInstrumentationTestCase2<Histor
             records.add(num);
         }
         Context context = instrumentation.getTargetContext();
-        DatabaseUtil.createAllowanceData(context, records);
+        DatabaseUtil.createAllowanceDataFromLong(context, records);
 
         final Bundle bundle = new Bundle();
         callActivityOnCreate(bundle);
