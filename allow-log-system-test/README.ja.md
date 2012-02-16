@@ -1,11 +1,18 @@
 #allow-log-system-test
 
-AllowLogのシステムテスト（機能テスト）格納ディレクトリです。
+AllowLogのシステムテスト格納ディレクトリです。
 
-リファクタリング前後で共通のテストとするため専用のブランチで作業します。
+リファクタリング前後で共通のテストとするため下記の専用ブランチで作業します。適時、masterにmergeして使用してください。
     https://github.com/mike-neck/AllowLog/tree/systemtest
 
-適時、masterにmergeして使用してください。
+#### Known issue
+v0.3時点で、プロダクトコード側の仕様変更（\0での登録を許可しない）のため、\0を登録実行するテストケースが失敗します。
+
+
+
+#Run on command line
+コマンドラインからのテスト実行方法
+    $ adb shell am instrument -w org.androidtec.app.allowlog.systemtest/android.test.InstrumentationTestRunner
 
 
 
