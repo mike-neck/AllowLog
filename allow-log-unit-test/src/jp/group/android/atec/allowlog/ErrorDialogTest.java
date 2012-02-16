@@ -5,7 +5,6 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
-import jp.group.android.atec.allowlog.mock.MockView;
 
 /**
  * @author: mike
