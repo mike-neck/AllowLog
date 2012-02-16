@@ -1,6 +1,10 @@
 
 package jp.group.android.atec.allowlog;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import jp.group.android.atec.allowlog.model.AllowanceLogData;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,11 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import jp.group.android.atec.allowlog.model.AllowanceLogData;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -80,7 +79,7 @@ public class MainActivity extends Activity implements OnClickListener {
         Calendar toCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
         toCalendar.add(Calendar.MONTH, 1);
         toCalendar.set(Calendar.DATE, 1);
-        toCalendar.set(Calendar.HOUR, 0);
+        toCalendar.set(Calendar.HOUR_OF_DAY, 0);
         toCalendar.set(Calendar.MINUTE, 0);
         toCalendar.set(Calendar.SECOND, 0);
         toCalendar.set(Calendar.MILLISECOND, 0);
@@ -91,7 +90,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private long getFromDate() {
         Calendar fromCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
         fromCalendar.set(Calendar.DATE, 1);
-        fromCalendar.set(Calendar.HOUR, 0);
+        fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
         fromCalendar.set(Calendar.MINUTE, 0);
         fromCalendar.set(Calendar.SECOND, 0);
         fromCalendar.set(Calendar.MILLISECOND, 0);

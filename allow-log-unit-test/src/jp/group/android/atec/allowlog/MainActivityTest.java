@@ -3,19 +3,18 @@ package jp.group.android.atec.allowlog;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
-import jp.group.android.atec.allowlog.util.AppDateUtil;
 import jp.group.android.atec.allowlog.util.DatabaseUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * 初回起動時のViewに関するテスト<br/>
