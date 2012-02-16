@@ -6,10 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import jp.group.android.atec.allowlog.AllowanceDatabase;
+import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
 import jp.group.android.atec.sf.importer.FileType;
 import jp.group.android.atec.sf.unit.DatabaseTestCase;
 
 import java.util.Date;
+import java.util.List;
 
 public class AllowanceLogDataTest extends DatabaseTestCase {
 
@@ -60,8 +62,8 @@ public class AllowanceLogDataTest extends DatabaseTestCase {
     public void test履歴データを取得する () {
         SQLiteDatabase database = getSQLiteDatabase();
         long now = new Date().getTime();
-        Cursor cursor = AllowanceLogData.searchHistory(database, now);
-        int count = cursor.getCount();
+        List<AllowanceLog> list = AllowanceLogData.searchHistory(database, now);
+        int count = list.size();
         assertEquals(5, count);
 
         database.close();
