@@ -20,4 +20,7 @@
             a:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
     </application>
 
+    <!-- Need for Robotium. -->
+    <supports-screens a:anyDensity="true"/>
+    
 </manifest>
