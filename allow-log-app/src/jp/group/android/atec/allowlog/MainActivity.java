@@ -111,10 +111,17 @@ public class MainActivity extends Activity implements OnClickListener {
             startActivity(intent);
             break;
         case R.id.allowance_registration:
-            intent = new Intent(this, RegisterActivity.class);
             EditText edit = (EditText) findViewById(R.id.payment);
             CharSequence amount = edit.getText();
-            intent.putExtra("ALLOWANCE_PAYMENT", amount);
+
+            if ( amount.toString().trim().length() == 0 ) {
+                intent = new Intent(this, ErrorDialog.class);
+                intent.putExtra(ErrorDialog.MESSAGE, getString(R.string.no_amount_input));
+            } else {
+                intent = new Intent(this, RegisterActivity.class);
+                intent.putExtra("ALLOWANCE_PAYMENT", amount);
+            }
+
             startActivityForResult(intent, RegisterActivity.REQUESTCODE_FROM_MAINACTIVITY);
             break;
         default:

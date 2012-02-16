@@ -9,4 +9,6 @@
     <string name="more">もっと見る</string>
     <string name="cancel">キャンセル</string>
     <string name="confirmation">お財布・ログに登録しますよ？！</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="no_amount_input">金額が未入力です。</string>
 </resources>

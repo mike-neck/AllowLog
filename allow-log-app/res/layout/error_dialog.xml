@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    a:layout_width="240dip"
+    a:layout_height="130dip"
+    a:orientation="vertical"
+    a:gravity="center"
+    a:padding="10dip" >
+
+    <TextView
+        a:id="@+id/error_message"
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content" />"
+
+    <Button 
+	    a:id="@+id/dialog_ok_button"
+	    a:layout_height="wrap_content"
+	    a:layout_width="120dip"
+	    a:layout_gravity="center|bottom"
+	    a:gravity="center"
+	    a:text="@string/dialog_confirm" />
+
+</LinearLayout>
