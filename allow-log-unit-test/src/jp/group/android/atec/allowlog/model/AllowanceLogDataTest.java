@@ -1,12 +1,15 @@
 
 package jp.group.android.atec.allowlog.model;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import jp.group.android.atec.allowlog.AllowanceDatabase;
 import jp.group.android.atec.sf.importer.FileType;
 import jp.group.android.atec.sf.unit.DatabaseTestCase;
+
+import java.util.Date;
 
 public class AllowanceLogDataTest extends DatabaseTestCase {
 
@@ -51,6 +54,16 @@ public class AllowanceLogDataTest extends DatabaseTestCase {
         long totalAmount = AllowanceLogData.getTotalAmount(database, 1350000000, 1330000000);
         assertEquals("期間間の金額を足したもの", 0, totalAmount);
         
+        database.close();
+    }
+
+    public void test履歴データを取得する () {
+        SQLiteDatabase database = getSQLiteDatabase();
+        long now = new Date().getTime();
+        Cursor cursor = AllowanceLogData.searchHistory(database, now);
+        int count = cursor.getCount();
+        assertEquals(5, count);
+
         database.close();
     }
 }

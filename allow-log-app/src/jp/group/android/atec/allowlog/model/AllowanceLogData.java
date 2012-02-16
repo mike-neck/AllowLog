@@ -87,20 +87,17 @@ public class AllowanceLogData {
      * 
      * @param database
      *            - 読み込み可能データベース.
-     * @param from
-     *            - 取得開始期間.
      * @param to
      *            - 取得終了期間.
      * @return - {@code Cursor} - データベースカーソル.
      */
-    public static Cursor searchHistory(SQLiteDatabase database, long from, long to) {
+    public static Cursor searchHistory(SQLiteDatabase database, long to) {
         String[] columns = {
                 AllowanceLog.LOG_DATE, AllowanceLog.AMOUNT
         };
-        String condition = new StringBuilder().append(AllowanceLog.LOG_DATE).append(">= ?").append(" AND ")
-                .append(AllowanceLog.LOG_DATE).append("<= ?").toString();
+        String condition = new StringBuilder().append(AllowanceLog.LOG_DATE).append("<= ?").toString();
         String[] condArgs = {
-                Long.toString(from), Long.toString(to)
+            Long.toString(to)
         };
         String order = new StringBuilder().append(AllowanceLog.LOG_DATE).append(" DESC").toString();
         return database.query(AllowanceLog.TABLE, columns, condition, condArgs, null, null, order);
