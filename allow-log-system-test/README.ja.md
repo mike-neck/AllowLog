@@ -12,6 +12,7 @@ v0.3時点で、プロダクトコード側の仕様変更（\0での登録を�
 
 #Run on command line
 コマンドラインからのテスト実行方法
+
     $ adb shell am instrument -w org.androidtec.app.allowlog.systemtest/android.test.InstrumentationTestRunner
 
 
