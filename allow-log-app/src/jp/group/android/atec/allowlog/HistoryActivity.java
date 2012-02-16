@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import jp.group.android.atec.allowlog.model.AllowanceLogData;
+import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
+import jp.group.android.atec.allowlog.util.AppDateUtil;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,8 +33,6 @@ public class HistoryActivity extends Activity {
 
     private int position;
 
-    private long lastDate = 0L;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,26 +42,36 @@ public class HistoryActivity extends Activity {
         SQLiteDatabase database = AllowanceLogData.readableDatabase(this);
         Cursor cursor = AllowanceLogData.searchHistory(database, new Date().getTime());
 
+        List<AllowanceLog> logs = new ArrayList<AllowanceLog>();
+        while (cursor.moveToNext()) {
+            AllowanceLog allowanceLog = new AllowanceLog();
+            int index = cursor.getColumnIndex(AllowanceLog.LOG_DATE);
+            long logDate = cursor.getLong(index);
+            allowanceLog.setLogDateInLong(logDate);
+
+            index = cursor.getColumnIndex(AllowanceLog.AMOUNT);
+            long amount = cursor.getLong(index);
+            allowanceLog.setAmount(amount);
+
+            logs.add(allowanceLog);
+        }
+
         int records = 0;
         List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
-        while (cursor.moveToNext()) {
+        for ( AllowanceLog value : logs ) {
             Map<String, String> map = new HashMap<String, String>();
 
-            int columnIndex = cursor.getColumnIndex("LOG_DATE");
-            lastDate = cursor.getLong(columnIndex);
-            String date = formatLogDate(lastDate);
-            map.put("LOG_DATE", date);
-
-            columnIndex = cursor.getColumnIndex("AMOUNT");
-            int amount = cursor.getInt(columnIndex);
-            map.put("AMOUNT", Integer.toString(amount));
+            Date logDate = value.getLogDate();
+            String date = AppDateUtil.formatDate(logDate);
+            map.put(AllowanceLog.LOG_DATE, date);
+            map.put(AllowanceLog.AMOUNT, Long.toString(value.getAmount()));
 
             payments.add(map);
             records += 1;
         }
 
         String[] keys = {
-                "LOG_DATE", "AMOUNT"
+                AllowanceLog.LOG_DATE, AllowanceLog.AMOUNT
         };
         int[] ids = {
                 R.id.date, R.id.amount
