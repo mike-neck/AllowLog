@@ -52,22 +52,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void test最初に表示される金額は０円 () {
-        instrumentation.waitForIdleSync();
         EditText editText = (EditText) activity.findViewById(R.id.payment);
         String actual = editText.getText().toString();
         assertEquals("", actual);
     }
 
     public void test今月はまだ一度も使っていないので０円 () {
-        activity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        instrumentation.callActivityOnResume(activity);
-                    }
-                }
-        );
-        instrumentation.waitForIdleSync();
         TextView textView = (TextView) activity.findViewById(R.id.total);
         assertEquals("0", textView.getText());
     }
