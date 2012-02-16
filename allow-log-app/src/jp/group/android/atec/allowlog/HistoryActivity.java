@@ -16,7 +16,6 @@ import jp.group.android.atec.allowlog.model.AllowanceLogData;
 import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
 import jp.group.android.atec.allowlog.util.AppDateUtil;
 import android.app.Activity;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListAdapter;
@@ -40,21 +39,7 @@ public class HistoryActivity extends Activity {
         this.position = 0;
 
         SQLiteDatabase database = AllowanceLogData.readableDatabase(this);
-        Cursor cursor = AllowanceLogData.searchHistory(database, new Date().getTime());
-
-        List<AllowanceLog> logs = new ArrayList<AllowanceLog>();
-        while (cursor.moveToNext()) {
-            AllowanceLog allowanceLog = new AllowanceLog();
-            int index = cursor.getColumnIndex(AllowanceLog.LOG_DATE);
-            long logDate = cursor.getLong(index);
-            allowanceLog.setLogDateInLong(logDate);
-
-            index = cursor.getColumnIndex(AllowanceLog.AMOUNT);
-            long amount = cursor.getLong(index);
-            allowanceLog.setAmount(amount);
-
-            logs.add(allowanceLog);
-        }
+        List<AllowanceLog> logs = AllowanceLogData.searchHistory(database, new Date().getTime());
 
         int records = 0;
         List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
@@ -82,7 +67,6 @@ public class HistoryActivity extends Activity {
         listView.setAdapter(adapter);
 
         position += records;
-        cursor.close();
         database.close();
     }
 

@@ -1,8 +1,8 @@
 
 package jp.group.android.atec.allowlog.model;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.group.android.atec.allowlog.AllowanceDatabase;
 import jp.group.android.atec.allowlog.HistoryActivity;
@@ -17,8 +17,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AllowanceLogData {
 
-    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
-
     public static SQLiteDatabase writableDatabase(Context context) {
         SQLiteOpenHelper helper = getHelper(context);
         return helper.getWritableDatabase();
@@ -31,24 +29,6 @@ public class AllowanceLogData {
 
     private static SQLiteOpenHelper getHelper(Context context) {
         return new AllowanceDatabase(context);
-    }
-
-    /**
-     * 日付のフォーマットを行う. TODO {@link AppDateUtil}に移すべき.
-     * 
-     * @param date
-     *            - long形式の日付
-     * @return - "YYYY/M/D\nH:m"形式の時刻文字列.
-     */
-    public static String formatDate(long date) {
-        Calendar calendar = Calendar.getInstance(TIME_ZONE);
-        calendar.setTimeInMillis(date);
-        StringBuilder builder = new StringBuilder();
-        String frmtDate = builder.append(calendar.get(Calendar.YEAR)).append("/")
-                .append(calendar.get(Calendar.MONTH) + 1).append("/").append(calendar.get(Calendar.DATE)).append("\n")
-                .append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.DATE)).toString();
-        return frmtDate;
-
     }
 
     /**
@@ -109,7 +89,7 @@ public class AllowanceLogData {
      *            - 取得終了期間.
      * @return - {@code Cursor} - データベースカーソル.
      */
-    public static Cursor searchHistory(SQLiteDatabase database, long to) {
+    public static List<AllowanceLog> searchHistory(SQLiteDatabase database, long to) {
         String[] columns = {
                 AllowanceLog.LOG_DATE, AllowanceLog.AMOUNT
         };
@@ -118,8 +98,24 @@ public class AllowanceLogData {
             Long.toString(to)
         };
         String order = new StringBuilder().append(AllowanceLog.LOG_DATE).append(" DESC").toString();
-        return database.query(AllowanceLog.TABLE, columns, condition, condArgs, null, null, order,
+        Cursor cursor = database.query(AllowanceLog.TABLE, columns, condition, condArgs, null, null, order,
                 Integer.toString(HistoryActivity.MAX_PAGE_SIZE));
+
+        List<AllowanceLog> logs = new ArrayList<AllowanceLog>();
+        while (cursor.moveToNext()) {
+            AllowanceLog allowanceLog = new AllowanceLog();
+            int index = cursor.getColumnIndex(AllowanceLog.LOG_DATE);
+            long logDate = cursor.getLong(index);
+            allowanceLog.setLogDateInLong(logDate);
+
+            index = cursor.getColumnIndex(AllowanceLog.AMOUNT);
+            long amount = cursor.getLong(index);
+            allowanceLog.setAmount(amount);
+
+            logs.add(allowanceLog);
+        }
+
+        return logs;
     }
 
     /**
