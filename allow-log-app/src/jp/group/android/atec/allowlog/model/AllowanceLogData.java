@@ -4,16 +4,34 @@ package jp.group.android.atec.allowlog.model;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import jp.group.android.atec.allowlog.AllowanceDatabase;
+import jp.group.android.atec.allowlog.HistoryActivity;
 import jp.group.android.atec.allowlog.exception.AppException;
 import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
 import jp.group.android.atec.allowlog.util.AppDateUtil;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class AllowanceLogData {
 
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
+
+    public static SQLiteDatabase writableDatabase(Context context) {
+        SQLiteOpenHelper helper = getHelper(context);
+        return helper.getWritableDatabase();
+    }
+
+    public static SQLiteDatabase readableDatabase(Context context) {
+        SQLiteOpenHelper helper = getHelper(context);
+        return helper.getReadableDatabase();
+    }
+
+    private static SQLiteOpenHelper getHelper(Context context) {
+        return new AllowanceDatabase(context);
+    }
 
     /**
      * 日付のフォーマットを行う. TODO {@link AppDateUtil}に移すべき.
@@ -100,7 +118,8 @@ public class AllowanceLogData {
             Long.toString(to)
         };
         String order = new StringBuilder().append(AllowanceLog.LOG_DATE).append(" DESC").toString();
-        return database.query(AllowanceLog.TABLE, columns, condition, condArgs, null, null, order);
+        return database.query(AllowanceLog.TABLE, columns, condition, condArgs, null, null, order,
+                Integer.toString(HistoryActivity.MAX_PAGE_SIZE));
     }
 
     /**

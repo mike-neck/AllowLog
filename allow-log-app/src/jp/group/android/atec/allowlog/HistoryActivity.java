@@ -6,15 +6,16 @@ package jp.group.android.atec.allowlog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import jp.group.android.atec.allowlog.model.AllowanceLogData;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,7 +27,7 @@ import android.widget.SimpleAdapter;
  */
 public class HistoryActivity extends Activity {
 
-    private final int MAX_PAGE_SIZE = 20;
+    public static final int MAX_PAGE_SIZE = 20;
 
     private int position;
 
@@ -38,10 +39,8 @@ public class HistoryActivity extends Activity {
         setContentView(R.layout.history);
         this.position = 0;
 
-        SQLiteOpenHelper helper = new AllowanceDatabase(this);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
-        Cursor cursor = searchHistory(database);
+        SQLiteDatabase database = AllowanceLogData.readableDatabase(this);
+        Cursor cursor = AllowanceLogData.searchHistory(database, new Date().getTime());
 
         int records = 0;
         List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
@@ -85,19 +84,6 @@ public class HistoryActivity extends Activity {
                 .append("/").append(calendar.get(Calendar.DATE)).append("\n")
                 .append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE))
                 .toString();
-    }
-
-    Cursor searchHistory(SQLiteDatabase database) {
-        String[] columns = {
-                "LOG_DATE", "AMOUNT"
-        };
-        String condition = "LOG_DATE <= ?";
-        String[] conditionArg = getNowInMillis(lastDate);
-
-        Cursor cursor = database.query("ALLOWANCE_LOG", columns, condition, conditionArg, null, null, "LOG_DATE DESC",
-                Integer.toString(MAX_PAGE_SIZE));
-        startManagingCursor(cursor);
-        return cursor;
     }
 
     String[] getNowInMillis(long date) {
