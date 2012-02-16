@@ -23,4 +23,7 @@
             a:theme="@android:style/Theme.Dialog"></activity>
     </application>
 
+    <!-- Need for Robotium. -->
+    <supports-screens a:anyDensity="true"/>
+    
 </manifest>
