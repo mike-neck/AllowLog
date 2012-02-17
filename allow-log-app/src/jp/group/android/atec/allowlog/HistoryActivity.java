@@ -5,12 +5,10 @@
 package jp.group.android.atec.allowlog;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import jp.group.android.atec.allowlog.model.AllowanceLogData;
 import jp.group.android.atec.allowlog.model.entity.AllowanceLog;
@@ -41,20 +39,7 @@ public class HistoryActivity extends Activity {
         SQLiteDatabase database = AllowanceLogData.readableDatabase(this);
         List<AllowanceLog> logs = AllowanceLogData.searchHistory(database, new Date().getTime());
 
-        int records = 0;
-        List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
-        for ( AllowanceLog value : logs ) {
-            Map<String, String> map = new HashMap<String, String>();
-
-            Date logDate = value.getLogDate();
-            String date = AppDateUtil.formatDate(logDate);
-            map.put(AllowanceLog.LOG_DATE, date);
-            map.put(AllowanceLog.AMOUNT, Long.toString(value.getAmount()));
-
-            payments.add(map);
-            records += 1;
-        }
-
+        List<Map<String, String>> payments = getPayments(logs);
         String[] keys = {
                 AllowanceLog.LOG_DATE, AllowanceLog.AMOUNT
         };
@@ -66,32 +51,23 @@ public class HistoryActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.history);
         listView.setAdapter(adapter);
 
-        position += records;
+        position += payments.size();
         database.close();
     }
 
-    String formatLogDate(long date) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
-        calendar.setTimeInMillis(date);
-        StringBuilder builder = new StringBuilder();
-        return builder.append(calendar.get(Calendar.YEAR)).append("/").append(calendar.get(Calendar.MONTH) + 1)
-                .append("/").append(calendar.get(Calendar.DATE)).append("\n")
-                .append(calendar.get(Calendar.HOUR_OF_DAY)).append(":").append(calendar.get(Calendar.MINUTE))
-                .toString();
-    }
+    private List<Map<String, String>> getPayments(List<AllowanceLog> logs) {
+        List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
+        for ( AllowanceLog value : logs ) {
+            Map<String, String> map = new HashMap<String, String>();
 
-    String[] getNowInMillis(long date) {
-        long now;
-        if ( date == 0 ) {
-            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
-            now = cal.getTimeInMillis();
-        } else {
-            now = date;
+            Date logDate = value.getLogDate();
+            String date = AppDateUtil.formatDate(logDate);
+            map.put(AllowanceLog.LOG_DATE, date);
+            map.put(AllowanceLog.AMOUNT, Long.toString(value.getAmount()));
+
+            payments.add(map);
         }
-        String[] conditionArg = {
-            Long.toString(now)
-        };
-        return conditionArg;
+        return payments;
     }
 
 }
