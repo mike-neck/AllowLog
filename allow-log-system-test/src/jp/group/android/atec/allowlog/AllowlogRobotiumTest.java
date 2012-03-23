@@ -116,6 +116,41 @@ public class AllowlogRobotiumTest extends ActivityInstrumentationTestCase2<MainA
     }
 
     /**
+     * 金額欄に指定金額を入力→[登録]→確認画面で[登録]→Rejectされるケース.
+     * <p>
+     * システムテスト項目のうち、以下の確認を行なう
+     * <p>
+     * A.テストデータの金額を入力できる<br>
+     * B.初期:ボタンが押せる<br>
+     * 　<s>B-1.インストール直後であればログに何も表示されないこと</s><br>
+     * C.登録ボタンが押せる<br>
+     * 　C-1.確認画面が出る<br>
+     * 　C-2.確認画面に表示されている金額は前画面で入力した値(手順X)である<br>
+     * 　C-6.登録がRejectされ、MainActivityに戻ること<br>
+     * 　C-7.[キャンセル]と同様、「今月使ったお金」の下にある合計額に変更がないこと<br>
+     * 
+     * @param inputAmount 入力金額
+     */
+    private void inputAmountAndRegisterReject(String inputAmount) {
+        solo.assertCurrentActivity("MainActivityが表示されること", MainActivity.class);
+        int beforeTotal = Integer.parseInt(solo.getText(MAIN_TOTAL_TEXT).getText().toString());
+        solo.enterText(MAIN_PAYMENT_TEXT, inputAmount);
+        solo.clickOnButton("登録");
+
+        assertTrue("C-1.確認画面が出る", solo.waitForActivity("RegisterActivity", TIMEOUT));
+        String confirmValue = solo.getText(REGISTER_PAYMENT).getText().toString();
+        assertEquals("C-2.確認画面に表示されている金額は前画面で入力した値(手順X)である", inputAmount, confirmValue);
+        solo.clickOnButton("登録");
+
+        assertTrue("MainActivityに戻ること", solo.waitForActivity("MainActivity", TIMEOUT));
+
+        // 合計欄はToastの存在で添字がずれるため、Solo#getText()でなくid指定で取得する
+        TextView total = (TextView)solo.getCurrentActivity().findViewById(R.id.total);
+        int afterTotal = Integer.parseInt(total.getText().toString());
+        assertEquals("C-7.[キャンセル]と同様、「今月使ったお金」の下にある合計額に変更がないこと", beforeTotal, afterTotal);
+    }
+
+    /**
      * 金額欄に指定金額を入力→[登録]→確認画面で[登録].
      * <p>
      * システムテスト項目のうち、以下の確認を行なう
@@ -160,10 +195,9 @@ public class AllowlogRobotiumTest extends ActivityInstrumentationTestCase2<MainA
     /**
      * 金額登録のテスト（金額欄に0を入力して登録）.
      */
-    public void test金額欄に0を入力して登録() {
+    public void test金額欄に0を入力して登録するがRejectされる() {
         String inputValue = "0";
-        inputAmountAndRegister(inputValue);
-        checkHistoryTop(inputValue);
+        inputAmountAndRegisterReject(inputValue);
     }
 
 }
