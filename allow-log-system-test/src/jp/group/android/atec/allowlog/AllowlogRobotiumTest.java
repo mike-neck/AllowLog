@@ -187,17 +187,41 @@ public class AllowlogRobotiumTest extends ActivityInstrumentationTestCase2<MainA
 
     /**
      * 金額登録のテスト（金額欄に0を入力して登録確認でキャンセル）.
+     * <p>
+     * 金額0でも確認画面までは出ることを確認するために必要。
      */
     public void test金額欄に0を入力して登録確認でキャンセル() {
         inputAmountAndCancel("0");
     }
 
     /**
-     * 金額登録のテスト（金額欄に0を入力して登録）.
+     * 金額登録のテスト（金額欄に0を入力して登録→Reject）.
      */
     public void test金額欄に0を入力して登録するがRejectされる() {
         String inputValue = "0";
         inputAmountAndRegisterReject(inputValue);
+    }
+
+    /**
+     * 金額登録のテスト（金額欄に1を入力して登録）.
+     * <p>
+     * 1は正常ケースの最小値（境界値）
+     */
+    public void test金額欄に1を入力して登録() {
+        String inputValue = "1";
+        inputAmountAndRegister(inputValue);
+        checkHistoryTop(inputValue);
+    }
+
+    /**
+     * 金額登録のテスト（金額欄に999999を入力して登録）.
+     * <p>
+     * 999999は入力制限の最大値（境界値）
+     */
+    public void test金額欄に999999を入力して登録() {
+        String inputValue = "999999";
+        inputAmountAndRegister(inputValue);
+        checkHistoryTop(inputValue);
     }
 
 }
